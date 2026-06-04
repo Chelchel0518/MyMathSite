@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyMathSite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Luckiest+Guy&display=swap" rel="stylesheet">
+
+    
+    <style>
+        body {
+            font-family:'Nunito', sans-serif; /*body*/
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+           font-family:'Luckiest Guy', sans-serif; /*heading*/
+           background-color:#62c347e7 ;
+           padding: 5px 10px;
+           margin: 0 0 30px 0;
+           border-radius: 10px;
+           font-weight: normal;
+        }
+        h2 {
+            font-family: 'Times New Roman', sans-serif;
+            text-align: left;
+            color:black ;
+            font-size: 25px;
+            font-weight: bold;
+        }
+        h3 {
+            font-family: 'Kalam', sans-serif;
+            text-align: left;
+            color:rgb(49, 110, 18) ;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 10px;
+            text-align:center;
+        }
+        header {
+            background-color: transparent;
+            color: rgb(0, 0, 0);
+            padding: 1px;
+            text-align: left;
+            font-size: medium;
+        }
+        main {
+            background: #fcfaf3;
+            padding: 30px;
+            border-radius: 5px;
+        }
+        section {
+            margin-top: 60px;
+            margin-bottom: 60px;
+        }
+        section h2 {
+            margin-bottom: 30px;
+        }
+        nav {
+            display:flex;
+            justify-content:space-between;
+            align-items:normal;
+            padding: 20px;
+            font-size: larger;
+            font-weight: bold;
+        }
+        nav a{
+            text-decoration: none;
+            color: black;
+            margin-left: 10px;
+
+        }
+        .problem {
+            display: flex;
+            gap: 10px;
+            grid-template-columns: repeat(4, 1fr);
+        }
+        .problem-card {
+            background-color: #e5fcdfa2;
+            padding: 20px;
+            border-radius: 12px;
+            border-style:ridge;
+            box-shadow: 0 2px 8px rgb(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .problem-card:hover {
+            transform: translateY(-5px);
+            background-color:#7b4ecfa3
+        }
+        .button {
+            background-color: #ef4444b1;
+            color:rgb(1, 1, 1);
+            padding: 10px 20px;
+            border: none;
+            outline: none;
+            border-style:groove;
+            box-shadow: 0 2px 8px rgba(255, 255, 255, 0.5);
+            border-radius: 30px;
+            font-size: larger;
+            cursor:pointer;
+            font-family:'Luckiest Guy', sans-serif;;
+            font-weight:lighter;
+            text-decoration: none;
+            display:inline-block;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 250px;
+            margin-top: 20px;
+        }
+        .frame {
+            display: none;
+            height: 100px;
+            overflow: hidden;
+        }
+        .frame * {
+            margin: 0;
+        }
+        .frame.active 
+        {
+            display:block;
+        }
+        .classroom {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            max-width: 500px;
+            margin:40px auto 0 auto;
+            padding: 30px 30px ;
+        }
+        .student {
+            display: flex;
+            transform: scale(0);
+            transition: transform 0.9s ease;
+            flex-direction: column;
+            align-items: center;
+            transition: box-shadow 0.4s ease;
+        }
+        .student.popped {
+            transform:scale(1);
+        }
+        .head {
+            width: 60px;
+            height: 60px;
+            border-radius: 50px; 
+            background-color: #89532e;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .body {
+            width: 60px;
+            height: 70px;
+            background-color: #ad2981;
+            border-radius: 20px 20px 0px 0px;
+
+        }
+        .glasses {
+            display: none;
+            align-items:center;
+            gap: 0px;
+            justify-content: center;
+            
+        }
+        .lens {
+            width: 20px;
+            height: 20px;
+            border: 3px solid black;
+            border-radius: 50px;
+            background-color: transparent;
+        }
+        .bridge {
+            width: 8px;
+            height: 2px;
+            background-color: black;
+        }
+        .show-glasses .glasses {
+            display: flex;
+        }
+        .highlighted {
+            box-shadow: 0 0 25px 8px #ccd222;
+            border-radius: 12px;
+            transition: box-shadow 0.4s ease;
+        }
+        .fraction-with-labels {
+            display:flex;
+            align-items:center;
+            gap: 20px;
+            justify-content: center;
+            height: 100;
+        }
+        .fraction {
+            display: flex;
+            flex-direction: column;
+            align-items:center;
+        }
+        .number {
+            font-size: 30px;
+            font-family: 'Luckiest Guy', sans-serif;
+        }
+        .solved {
+            text-align: center;
+            color: #000100;
+            font-family: 'Luckiest Guy', sans-serif;
+            margin-bottom: 5px;
+            font-size: 15px ;
+        }
+        .label {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .fraction-line {
+            background-color: black;
+            height: 4px;
+            width: 50px;
+            margin: 1px 0;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1em;
+            color: #cc3030;
+        }
+    </style>
+</head>
+
+<body>
+     <nav>
+        <a href="layout.html" class="logo">MyMathSite</a>
+
+        <div class="nav-links">
+            <a href="about.html">About</a>
+        </div>
+    </nav>
+    
+    <main> 
+        
+        <h2>Problem 1</h2>
+        <p class="problem-statement">
+            There are 12 students in a class. 4 of them wear glasses. What fraction of the students wear glasses?
+        </p>
+
+        <div class="animation-box">
+            <div class="classroom" id="classroom"></div>
+
+            <div class="frame active" id="frame-1">
+                <h3>Total number of students: 12 students</h3>
+            </div>
+            <div class="frame" id="frame-2">
+                <h3>Count the students wearing glasses</h3>
+            </div>
+
+            <div class="frame" id="frame-3">
+               <div class="fraction-with-labels">
+                    <div class="fraction">
+                        <span class="number">4</span>
+                        <div class="fraction-line"></div>
+                        <span class="number">12</span>
+                    </div>
+                    <div class="label">
+                            <span class="label"><h3>⬅ with glasses</h3></span>
+                            <span class="label"><h3>⬅ total students</h3></span>
+                    </div>
+                </div> 
+            </div>
+
+            <div class="frame" id="frame-4"> 
+                <div class="fraction-with-labels">
+                    <div class="fraction">  
+                        <span class="number">1</span>
+                        <div class="fraction-line"></div>
+                        <span class="number">3</span>
+                    </div>
+                    <div class="label">
+                        <span class="label"><h3> ⬅ simplify by dividing by 4 </h3></span>
+                    </div>
+                </div>
+                <h2 class="solved">🎉 You solved it!</h2>
+            </div>
+
+        </div>
+
+        <div class="controls">
+            <button class="button" id="prevBtn">Previous</button>
+            <button class="button" id="nextBtn">Next</button>
+        </div>
+
+    </main>
+
+    <script>
+        //empty class container
+        let classroom = document.getElementById("classroom");
+
+        // random shirt color and skin tones
+
+        let skinTones = ["#f4c2a1", "#843722", "#ddb0a0", "#593b2b", "#f1c27d"];
+        let shirtColor = ["#ffa9e3","#95d954", "#9165cd", "#a20732", "#026a81"];
+
+        function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+        }
+
+        let indices = [];
+        for (let i = 0; i < 12; i++) {
+            indices.push(i);
+        }
+
+        shuffle(indices);
+
+        let glassesIndices = indices.slice(0, 4);
+
+        function updateHighlights()
+        {
+            for(let i= 0; i< glassesIndices.length; i++) {
+                
+                let studentIndex = glassesIndices[i];
+                if(currentFrame >= 2)
+            {
+                classroom.children[studentIndex].classList.add("highlighted");
+            }   
+            else{
+                    classroom.children[studentIndex].classList.remove("highlighted");
+                }
+            }
+        }
+
+        for( let i = 0; i <12; i++) {
+
+            let student = document.createElement("div");
+            let head = document.createElement("div");
+            let body = document.createElement("div");
+
+            student.classList.add("student");
+            head.classList.add("head");
+            body.classList.add("body");
+
+            //glasses
+            let glasses = document.createElement("div");
+            let lensLeft = document.createElement("div");
+            let bridge = document.createElement("div");
+            let lensRight = document.createElement("div");
+
+            glasses.classList.add("glasses");
+            lensLeft.classList.add("lens");
+            bridge.classList.add("bridge");
+            lensRight.classList.add("lens");
+
+            glasses.appendChild(lensLeft);
+            glasses.appendChild(bridge);
+            glasses.appendChild(lensRight);
+            
+            if (glassesIndices.includes(i)) {
+                student.classList.add("show-glasses");
+            }
+
+            head.appendChild(glasses);
+
+
+            let randomSkin = skinTones[Math.floor(Math.random() * skinTones.length)];
+            head.style.backgroundColor = randomSkin;
+
+            let randomShirt = shirtColor[Math.floor(Math.random()* shirtColor.length)];
+            body.style.backgroundColor = randomShirt;
+
+            student.appendChild(head);
+            student.appendChild(body);
+
+            classroom.appendChild(student); //add finished student to the class room
+        }
+
+        function popInStudents() {
+            for(let i = 0; i <classroom.children.length; i++)
+            {
+                setTimeout(function() {
+                    classroom.children[i].classList.add("popped");
+                }, i * 100 *2);
+            }
+        }
+
+        popInStudents();
+
+        let nextButton = document.getElementById("nextBtn");
+        let prevButton = document.getElementById("prevBtn");
+        
+        let currentFrame = 1;
+
+        nextButton.addEventListener("click", function()
+        {
+            if(currentFrame === 4)
+            {
+                return;
+            }
+            
+            document.getElementById(`frame-${currentFrame}`).classList.remove("active");
+            currentFrame ++;
+            updateHighlights();
+            document.getElementById(`frame-${currentFrame}`).classList.add("active");
+        })
+
+        prevButton.addEventListener("click", function()
+        {
+           if(currentFrame === 1)
+            {
+                return;
+            }
+            
+            document.getElementById(`frame-${currentFrame}`).classList.remove("active");
+            currentFrame --;
+            updateHighlights();
+            document.getElementById(`frame-${currentFrame}`).classList.add("active");
+        })
+
+    </script>
+</body>

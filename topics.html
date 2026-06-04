@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topics | MyMathSite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Luckiest+Guy&display=swap" rel="stylesheet">
+
+    <style>
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #FFFBF2;
+            margin: 0;
+            padding: 40px;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            font-weight: normal;
+            text-align: center;
+            font-family: 'Luckiest Guy', sans-serif;
+        }
+
+        h2 {
+            font-weight: bolder;
+            font-size: 15px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        
+        h3 {
+            font-family: Impact;
+            font-size:xx-large
+        }
+
+        .accent{
+            color: #1D9E75;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            font-size: larger;
+            font-weight: bold;
+            border-bottom: 2px solid #FAC775;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: black;
+            margin-left: 10px;
+        }
+
+        .main {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 40px;
+            position: relative;
+        }
+
+        .main::before {
+            content: '';
+            position: fixed;
+            top: -60px; left: -80px;
+            width: 320px; height: 320px;
+            background: #FAEEDA;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .main::after {
+            content: '';
+            position: fixed;
+            bottom: -80px; right: -60px;
+            width: 280px; height: 280px;
+            background: #E1F5EE;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .topics {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .topic-fractions {
+            text-decoration: none;
+            background-color: #87db72b5;
+            color: inherit;
+            border-radius: 10px;
+            padding: 0px 10px;
+        }
+
+        .topic-rates {
+            text-decoration: none;
+            background-color: #f59064bd;
+            color: inherit;
+            border-radius: 10px;
+            padding: 0px 10px;
+        }
+
+        .topic-percentages {
+            text-decoration: none;
+            background-color: #d459a996;
+            color: inherit;
+            border-radius: 10px;
+            padding: 0px 10px;
+        }
+
+        .topic-algebra {
+            text-decoration: none;
+            background-color: #56aed188;
+            color: inherit;
+            border-radius: 10px;
+            padding: 0px 10px;
+        }
+
+        .topic-fractions:hover {
+            background-color: #62c347e7;
+            transform: translateY(-4px);
+        }
+
+        .topic-rates:hover {
+            background-color: #df632de0;
+            transform: translateY(-4px);
+        }
+
+        .topic-percentages:hover {
+            background-color: #e73aabcb;
+            transform: translateY(-4px);
+        }
+
+        .topic-algebra:hover {
+            background-color: #24a0d1d0;
+            transform: translateY(-4px);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1em;
+            color: #888780;
+            border-top: 1.5px solid #F1EFE8;
+            padding: 2rem;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <nav>
+         <a href="layout.html" class="logo">
+            <h3> <span class="accent">My</span>Math<span class="accent">Site</span></h3>
+        </a>
+
+        <div class="nav-links">
+            <a href="about.html"><h2>About</h2>
+            </a>
+        </div>
+    </nav>
+
+    <div class="main">
+
+        <h1>Explore Topics</h1>
+        <p style="text-align:center; margin-bottom: 30px;">Pick a topic and start learning step by step.</p>
+
+        <div class="topics">
+
+            <a href="fractions.html" class="topic topic-fractions">
+                <h2>Fractions ➗</h2>
+                <p>Pieces of a whole, made simple.</p>
+            </a>
+
+            <a href="rates.html" class="topic topic-rates">
+                <h2>Rates ⏱️</h2>
+                <p>Speed, price, and other ratios.</p>
+            </a>
+
+            <a href="percentages.html" class="topic topic-percentages">
+                <h2>Percentages 💯</h2>
+                <p>Parts of 100, discounts, and growths.</p>
+            </a>
+
+            <a href="algebra.html" class="topic topic-algebra">
+                <h2>Algebra 🔎</h2>
+                <p>Find the unknown with smart logic.</p>
+            </a>
+
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 MyMathSite. All rights reserved.
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyMathSite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Luckiest+Guy&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family:'Nunito', sans-serif; /*body*/
+            background-color:  #FFFBF2;
+            margin: 0;
+            padding: 40px;
+            overflow-x: hidden;
+        }
+        h1 {
+           font-family:'Luckiest Guy', sans-serif; /*heading*/
+           background-color:#24a0d1d0;
+           padding: 30px 40px;
+           margin: 40px 0 30px 0;
+           border-radius: 10px;
+           font-weight: normal;
+        }
+        h2 {
+            font-family: 'Luckiest Guy', sans-serif;
+            text-align: left;
+            color:black ;
+            font-weight: normal;
+
+        }
+        .logo-text {
+            font-family: Impact;
+            font-size: 1.8rem;
+        }
+        .accent{
+            color: #1D9E75;
+        }
+
+        h4 {
+            font-weight: bolder;
+            font-size: 15px;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+        }
+
+        header {
+            background-color: transparent;
+            color: rgb(0, 0, 0);
+            padding: 1px;
+            text-align: left;
+            font-size: medium;
+        }
+        main {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 5px;
+            max-width: 720px;
+            margin: 40px auto;
+            position: relative; /* add this */
+            overflow: hidden;   /* add this too so circles don't spill out */
+
+        }
+
+        .main::before {
+        content: '';
+        position: fixed;
+        top: -60px; left: -80px;
+        width: 320px; height: 320px;
+        background: #FAEEDA;
+        border-radius: 50%;
+        z-index: -1;
+        }
+    
+        .main::after {
+        content: '';
+        position: fixed;
+        bottom: -80px; right: -60px;
+        width: 280px; height: 280px;
+        background: #E1F5EE;
+        border-radius: 50%;
+        z-index: -1;
+        }
+        .main-inner { position: relative; z-index: 1; }
+
+        section {
+            margin-top: 60px;
+            margin-bottom: 60px;
+        }
+        section h2 {
+            margin-bottom: 30px;
+        }
+        nav {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding: 20px;
+            font-size: larger;
+            font-weight: bold;
+            border-bottom: 2px solid #FAC775;
+        }
+        nav a{
+
+            text-decoration: none;
+            color: black;
+            margin-left: 10px;
+
+        }
+        
+        .problem {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(4, 1fr);
+        }
+        .problem-card {
+            background-color: #3799c027;
+            padding: 20px; 
+            border-radius: 12px;
+            border-style:ridge;
+            box-shadow: 0 2px 8px rgb(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .problem-card:hover {
+            
+            transform: translateY(-3px);
+            background-color:#dce0a6dc
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1em;
+            color: #888780;
+            border-top: 1.5px solid #F1EFE8;
+            padding: 2rem;
+        }
+    
+        @media (max-width: 560px) {
+        .card { flex-direction: column; gap: 1rem; }
+        nav ul { gap: 1rem; }
+        }
+    </style>
+</head>
+
+<body> 
+
+<nav>
+    <a href="layout.html" class="logo">
+        <span class="logo-text"><span class="accent">My</span>Math<span class="accent">Site</span></span>
+    </a>
+
+     <a href="about.html"><h4>About</h4></a>
+</nav>
+    
+    <div class="main">
+        <h1>Algebra🔎</h1>
+        <p>Intro.....</p>
+
+        <section>
+            <h2>Beginner</h2>
+            <div class="problem">
+            <a class="problem-card" href="algebra-beginner-problem-1.html">
+                <h3>Problem 1</h3>
+                <p>Preview of the problem</p>
+            </a>
+             <a class="problem-card" href="algebra-beginner-problem-2.html">
+                <h3>Problem 2</h3>
+                <p>Preview of the problem</p>
+            </a>
+             <a class="problem-card" href="algebra-beginner-problem-3.html">
+                <h3>Problem 3</h3>
+                <p>Preview of the problem</p>
+            </a>
+             <a class="problem-card" href="algebra-beginner-problem-4.html">
+                <h3>Problem 4</h3>
+                <p>Preview of the problem</p>
+            </a>
+            </div>
+        </section>
+
+        <section>
+            <h2>Intermediate</h2>
+            <div class="problem">
+            <a class="problem-card" href="algebra-intermediate-problem-1.html">
+                <h3>Problem 1</h3>
+                <p>Preview of the problem</p>
+            </a>
+            <a class="problem-card" href="algebra-intermediate-problem-2.html">
+                <h3>Problem 2</h3>
+                <p>Preview of the problem</p>
+            </a>
+            <a class="problem-card" href="algebra-intermediate-problem-3.html">
+                <h3>Problem 3</h3>
+                <p>Preview of the problem</p>
+            </a>
+            <a class="problem-card" href="algebra-intermediate-problem-4.html">
+                <h3>Problem 4</h3>
+                <p>Preview of the problem</p>
+            </a>
+            </div>
+        </section>
+
+        <section>
+            <h2>Pro</h2>
+            <div class="problem">
+            <a class="problem-card" href="algebra-pro-problem-1.html">
+                <h3>Problem 1</h3>
+                <p>Preview of the problem</p>
+            </a>
+            <a class="problem-card" href="algebra-pro-problem-2.html">
+                <h3>Problem 2</h3>
+                <p>Preview of the problem</p>
+            </a>
+            <a class="problem-card" href="algebra-pro-problem-3.html">
+                <h3>Problem 3</h3>
+                <p>Preview of the problem</p>
+            </a>
+            <a class="problem-card" href="algebra-pro-problem-4.html">
+                <h3>Problem 4</h3>
+                <p>Preview of the problem</p>
+            </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        &copy; 2026 My Website. All rights reserved.
+    </footer>
+</body>
+
+</html>
