@@ -15,9 +15,9 @@
     <style>
         body {
             font-family:'Nunito', sans-serif; /*body*/
-            background: linear-gradient(to bottom, #faeeda, #e1f5ee);
             margin: 0;
             padding: 40px;
+            background:#faeeda;
         }
 
         h1 {
@@ -28,11 +28,12 @@
            border-radius: 10px;
            font-weight: normal;
         }
+
         h2 {
             font-family: 'Times New Roman', sans-serif;
             text-align: left;
             color:black ;
-            font-size: 25px;
+            font-size: 30px;
             font-weight: bold;
         }
         h3 {
@@ -44,13 +45,15 @@
             padding: 10px;
             text-align:center;
         }
+
+        p {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 1.1rem;
+        }
                 
         .logo {
-        font-family: 'Impact', cursive;
-        font-size: 1.2rem;
-        font-weight: normal;
-        text-decoration: none;
-        color: black;
+            font-family: Impact;
+            font-size: 1.8rem;
         }
 
         .accent{
@@ -68,16 +71,17 @@
             padding: 30px 40px;
             border-radius: 5px;
             max-width: 720px;
-            margin: 0 auto;
+            margin: 40px auto;
             position: relative; /* add this */
             overflow: hidden;   /* add this too so circles don't spill out */
 
         }
-        
+
         section {
             margin-top: 20px;
             margin-bottom: 20px;
         }
+
         section h2 {
             margin-bottom: 30px;
         }
@@ -85,6 +89,7 @@
             display:flex;
             justify-content:space-between;
             align-items:center;
+            padding: 20px;
             font-size: larger;
             font-weight: bold;
             border-bottom: 2px solid #FAC775;
@@ -121,9 +126,8 @@
             background-color: #1D9E75;
             color: white;
             padding: 10px 20px;
-            border: none;
-            outline: none;
-            border-style:groove;
+            border-style:solid;
+            border-color: rgb(128, 123, 123);
             box-shadow: 0 2px 8px rgba(255, 255, 255, 0.5);
             border-radius: 30px;
             font-size: larger;
@@ -269,8 +273,9 @@
         
         <h2>Problem 1</h2>
         <p class="problem-statement">
-            There are 12 students in a class. 4 of them wear glasses. What fraction of the students wear glasses?
+            There are 12 students in a class. 4 of the students wear glasses.
         </p>
+        <p>What fraction of the students wear glasses in the class?</p>
 
         <div class="animation-box">
             <div class="classroom" id="classroom"></div>
