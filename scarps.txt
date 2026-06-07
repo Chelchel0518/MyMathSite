@@ -9,7 +9,7 @@ bash   cd ~/MyMathSite
 Run these three commands:
 
 bash   git add .
-   git commit -m "describe what you changed"
-   git push
+git commit -m "describe what you changed"
+git push
 
 Visit your live site and do a hard refresh (Ctrl+Shift+R) to see the updates
