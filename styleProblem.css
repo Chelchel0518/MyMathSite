@@ -1,0 +1,145 @@
+/* ================================
+   MyMathSite — Shared Styles
+   style.css
+   ================================ */
+
+/* --- Fonts & Body --- */
+body {
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 40px;
+    background: #faeeda;
+}
+
+h1 {
+    font-family: 'Luckiest Guy', sans-serif;
+    background-color: #62c347e7;
+    padding: 5px 10px;
+    margin: 0 0 30px 0;
+    border-radius: 10px;
+    font-weight: normal;
+}
+
+h2 {
+    font-family: 'Times New Roman', sans-serif;
+    text-align: left;
+    color: black;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+h3 {
+    font-family: 'Kalam', sans-serif;
+    text-align: left;
+    color: rgb(49, 110, 18);
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+}
+
+p {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.1rem;
+}
+
+section {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+section h2 {
+    margin-bottom: 30px;
+}
+
+/* --- Branding --- */
+.logo {
+    font-family: Impact;
+    font-size: 1.8rem;
+}
+
+.accent {
+    color: #1D9E75;
+}
+
+/* --- Header & Nav --- */
+header {
+    background-color: transparent;
+    color: rgb(0, 0, 0);
+    padding-top: 1px;
+    text-align: left;
+    font-size: medium;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    font-size: larger;
+    font-weight: bold;
+    border-bottom: 2px solid #FAC775;
+}
+
+nav a {
+    text-decoration: none;
+    color: black;
+    margin-left: 10px;
+}
+
+/* --- Buttons & Controls --- */
+.button {
+    background-color: #1D9E75;
+    color: white;
+    padding: 10px 20px;
+    border-style: solid;
+    border-color: rgb(128, 123, 123);
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.5);
+    border-radius: 30px;
+    font-size: larger;
+    cursor: pointer;
+    font-family: 'Luckiest Guy', sans-serif;
+    font-weight: lighter;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 250px;
+    margin-top: 20px;
+}
+
+/* --- Problem Cards (used on topic pages) --- */
+.problem {
+    display: flex;
+    gap: 10px;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.problem-card {
+    background-color: #e5fcdfa2;
+    padding: 20px;
+    border-radius: 12px;
+    border-style: ridge;
+    box-shadow: 0 2px 8px rgb(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.problem-card:hover {
+    transform: translateY(-5px);
+    background-color: #7b4ecfa3;
+}
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1em;
+    color: #cc3030;
+}
