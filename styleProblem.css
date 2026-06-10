@@ -104,10 +104,35 @@ nav a {
     display: inline-block;
 }
 
+.pageNav_button {
+
+    display: inline-block;
+    background: #BA7517;
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.75rem 2rem;
+    border-radius: 999px;
+    border-color: #9b5805;
+    border-style: solid;
+    text-decoration: none;
+    transform: scale(0.80);
+    cursor: pointer;
+
+}
+
 .controls {
     display: flex;
     justify-content: center;
     gap: 250px;
+    margin-top: 20px;
+}
+
+.page_controls {
+    display: flex;
+    justify-content:space-between;
+    gap: 500px;
     margin-top: 20px;
 }
 
