@@ -53,15 +53,18 @@
 
             if(userAnswer === "") {
                 feedback.textContent = "Please type answer first!";
-                feedback.style.color = "black";
+                feedback.style.color = "blue";
                 return;
             }
             if(userAnswer === "4/15") {
                 feedback.textContent = "Correct✅ Lets go!";
                 feedback.style.color = "green";
+                document.getElementById("answerInput").value = "4/15";
+                return;
+
             } else {
                 attempts++;
-                if (attempts >= 2) {
+                if (attempts >= 3) {
                     feedback.textContent = "The answer is 4/15. Keep practicing!";
                     feedback.style.color = "red";
                 } else{
