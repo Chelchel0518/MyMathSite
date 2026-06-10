@@ -43,6 +43,12 @@ p {
     font-size: 1.1rem;
 }
 
+.hint {
+    color: gray;
+    font-style: italic;
+    font-size: small;
+}
+
 section {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -104,6 +110,11 @@ nav a {
     display: inline-block;
 }
 
+.button:hover {
+
+    background-color: #14694e ;
+}
+
 .pageNav_button {
 
     display: inline-block;
@@ -119,8 +130,30 @@ nav a {
     text-decoration: none;
     transform: scale(0.80);
     cursor: pointer;
-
 }
+
+.tryIt_button {
+
+    display: inline-block;
+    background:rgb(25, 125, 72);
+    color:#ffffff;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.75rem 2rem;
+    border-radius: 999px;
+    border-color: #9b5805;
+    border-style: solid;
+    text-decoration: none;
+    transform: scale(0.80);
+    cursor: pointer;
+}
+
+.tryIt_button:hover {
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
 
 .controls {
     display: flex;
@@ -161,6 +194,11 @@ nav a {
     background-color: #7b4ecfa3;
 }
 
+.lesson-layout {
+    display: flex;
+    gap:30px;
+    align-items: flex-start;
+}
 /* --- Footer --- */
 footer {
     text-align: center;
