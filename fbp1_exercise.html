@@ -61,8 +61,7 @@
                 feedback.style.color = "green";
                 document.getElementById("answerInput").value = "4/15";
                 return;
-
-            } else {
+            }else {
                 attempts++;
                 if (attempts >= 3) {
                     feedback.textContent = "The answer is 4/15. Keep practicing!";
@@ -70,6 +69,10 @@
                 } else{
                     feedback.textContent = "Not quite - try again!";
                     feedback.style.color = "red";
+                      if(userAnswer === "8/30") {
+                        feedback.textContent = "Simplify it!";
+                        feedback.style.color = "purple";
+                    }
                 }
             }
             document.getElementById("answerInput").value = "";
