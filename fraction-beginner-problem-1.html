@@ -184,36 +184,41 @@
         </div>
 
     </main>
+    
 
     <script>
-        //empty class container
+       let highlightTimer;
         let classroom = document.getElementById("classroom");
-
-        // random shirt color and skin tones
 
         let skinTones = ["#f4c2a1", "#843722", "#ddb0a0", "#593b2b", "#f1c27d"];
         let shirtColor = ["#ffa9e3","#95d954", "#9165cd", "#a20732", "#026a81"];
 
         function shuffle(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            let j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
+            for (let i = array.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
         }
 
         let indices = [];
-        for (let i = 0; i < 12; i++) {
-            indices.push(i);
-        }
-
+        for (let i = 0; i < 12; i++) { indices.push(i); }
         shuffle(indices);
-
         let glassesIndices = indices.slice(0, 4);
 
+        function highlight(list) {
+            for (let i = 0; i < list.length; i++) {
+                classroom.children[list[i]].classList.add("highlight");
+            }
+        }
 
-        for( let i = 0; i <12; i++) {
+        function clearHighlight() {
+            for (let i = 0; i < classroom.children.length; i++) {
+                classroom.children[i].classList.remove("highlight");
+            }
+        }
 
+        for (let i = 0; i < 12; i++) {
             let student = document.createElement("div");
             let head = document.createElement("div");
             let body = document.createElement("div");
@@ -222,7 +227,6 @@
             head.classList.add("head");
             body.classList.add("body");
 
-            //glasses
             let glasses = document.createElement("div");
             let lensLeft = document.createElement("div");
             let bridge = document.createElement("div");
@@ -236,35 +240,25 @@
             glasses.appendChild(lensLeft);
             glasses.appendChild(bridge);
             glasses.appendChild(lensRight);
-            
-            if (glassesIndices.includes(i)) {
-                student.classList.add("show-glasses");
-            }
+
+            if (glassesIndices.includes(i)) { student.classList.add("show-glasses"); }
 
             head.appendChild(glasses);
-
-
-            let randomSkin = skinTones[Math.floor(Math.random() * skinTones.length)];
-            head.style.backgroundColor = randomSkin;
-
-            let randomShirt = shirtColor[Math.floor(Math.random()* shirtColor.length)];
-            body.style.backgroundColor = randomShirt;
+            head.style.backgroundColor = skinTones[Math.floor(Math.random() * skinTones.length)];
+            body.style.backgroundColor = shirtColor[Math.floor(Math.random() * shirtColor.length)];
 
             student.appendChild(head);
             student.appendChild(body);
-
-            classroom.appendChild(student); //add finished student to the class room
+            classroom.appendChild(student);
         }
 
         function popInStudents() {
-            for(let i = 0; i <classroom.children.length; i++)
-            {
+            for (let i = 0; i < classroom.children.length; i++) {
                 setTimeout(function() {
                     classroom.children[i].classList.add("popped");
-                }, i * 100 *2);
+                }, i * 200);
             }
         }
-
         popInStudents();
 
         const steps = [
@@ -288,21 +282,19 @@
                 answer: "4/12 ÷ 4 = 1/3 — same value, simpler form.",
                 why: "Dividing top and bottom by the same number never changes the fraction's meaning."
             }
-
         ];
 
         let current = 0;
-
         let nextBtn = document.getElementById("nextBtn");
         let prevBtn = document.getElementById("prevBtn");
-
-        const panel =document.getElementById("steps-panel");
+        const panel = document.getElementById("steps-panel");
 
         function showStep(index) {
+            clearTimeout(highlightTimer);
+            clearHighlight();
             panel.innerHTML = "";
 
             for (let i = 0; i <= index; i++) {
-
                 let card = document.createElement("div");
                 card.classList.add("step-card");
 
@@ -323,43 +315,39 @@
                 card.appendChild(w);
                 panel.appendChild(card);
 
-                if( i < index) {
+                if (i < index) {
                     a.classList.add("visible");
                     w.classList.add("visible");
                 }
 
-                if( i === index) {
-                    setTimeout(() => {a.classList.add("visible");}, 4250);
-                    setTimeout(() => {w.classList.add("visible");}, 5500);
-                }
+                if (i === index) {
+                    setTimeout(() => { a.classList.add("visible"); }, 3000);
+                    setTimeout(() => { w.classList.add("visible"); }, 3500);
 
+                    if (index === 0) {
+                        highlightTimer = setTimeout(() => { highlight([...Array(12).keys()]); }, 3000);
+                    } else if (index === 1) {
+                        highlightTimer = setTimeout(() => { highlight(glassesIndices); }, 3000);
+                    }
+                }
             }
-            prevBtn.style.visibility = current === 0? "hidden" :"visible"
+
+            prevBtn.style.visibility = current === 0 ? "hidden" : "visible";
             nextBtn.style.visibility = current === steps.length - 1 ? "hidden" : "visible";
-        } 
+        }
+
         showStep(0);
 
-
-        nextBtn.addEventListener("click", function()
-        {
-            if(current === steps.length - 1)
-            {
-                return;
-            }
-            
+        nextBtn.addEventListener("click", function() {
+            if (current === steps.length - 1) return;
             current++;
             showStep(current);
         });
 
-        prevBtn.addEventListener("click", function()
-        {
-           if(current === 0)
-            {
-                return;
-            }
-            
-           current--;
-           showStep(current);
+        prevBtn.addEventListener("click", function() {
+            if (current === 0) return;
+            current--;
+            showStep(current);
         });
 
     </script>

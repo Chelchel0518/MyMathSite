@@ -49,6 +49,12 @@ p {
     font-size: small;
 }
 
+.highlight {
+    box-shadow: 0 0 15px 5px #ebe71f;
+    border-radius: 15px;
+    transition: box-shadow 0.2s ease;
+}
+
 section {
     margin-top: 20px;
     margin-bottom: 20px;
