@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyMathSite</title>
+    <link rel="stylesheet" href="styleProblem.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Luckiest+Guy&display=swap" rel="stylesheet">
+
+</head>
+
+<style>
+    .lesson-layout {
+        display: flex;
+        gap: 30px;
+        align-items: flex-start;
+    }
+
+    .steps-panel {
+        flex: 1;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .steps-panel {
+        flex: 1;        
+        max-height: 380px;
+        overflow-y: auto;
+    }
+
+    .step-card {
+        background: white;
+        border-radius: 12px;
+        padding: 12px 14px;
+        margin-bottom: 12px;
+        border: 1px solid #8b8a88;
+    }
+
+    .step-question {
+        font-size: 15px;
+        color: black;
+        margin-bottom: 8px;
+    }
+
+    .step-answer {
+    font-size: 16px;
+    font-weight: bold;
+    color: #1D9E75;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    }
+
+    .step-why {
+    font-size: 13px;
+    color: gray;
+    font-style: italic;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    margin-top: 6px;
+    }
+
+    .visible {
+    opacity: 1 !important;
+    }
+
+    #prevBtn {
+        visibility: hidden;
+    }
+
+    #nextBtn {
+        visibility: hidden;
+    }
+
+    .chocolate {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+        align-items: center;
+        max-width: 400px;
+        margin: 40px auto 0 auto;
+        padding: 30px;
+    }
+
+    /* a whole bar — true 3x3 of equal squares */
+    .choc-bar {
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
+        background-color: #7B4A26;
+        background-image:
+            repeating-linear-gradient(0deg,  rgba(0,0,0,.28) 0 1px, transparent 1px 20px),
+            repeating-linear-gradient(90deg, rgba(0,0,0,.28) 0 1px, transparent 1px 20px);
+        transform: scale(0);
+        transition: transform 0.5s ease;
+    }
+    .choc-bar.popped { transform: scale(1); }
+
+    /* the 7/9 partial bar (3x3 grid, matches the whole bars) */
+    .partial-bar {
+        display: grid;
+        grid-template-columns: repeat(3, 20px);
+        grid-template-rows: repeat(3, 20px);
+        gap: 0;
+        transform: scale(0);
+        transition: transform 0.5s ease;
+    }
+    .partial-bar.popped { transform: scale(1); }
+
+    .square { border-radius: 4px; }
+    .square.filled { background-color: #7B4A26; }
+    .square.empty  { border: 2px dashed #C2A98C; }
+</style>
+
+<body>
+    <nav>
+        <a href="layout.html" class="logo">
+        <span class="accent">My</span>Math<span class="accent">Site</span>
+        </a>
+    </nav>
+
+     <div class="page_controls">
+        <a href="fractions.html" class="pageNav_button">← Back</a>
+        <a href="fbp2_exercise.html" class="tryIt_button"> Try it yourself</a>
+    </div>
+
+    <h2>Problem 2</h2>
+        <p class="problem-statement">
+            A girl ate 16 chocolate bars at the Halloween party. 
+            When she got home, she found 4/9 of a chocolate bar under her bed — and she ate that too!
+        </p>
+        <p>How many cholocate bars did she eat that day?</p>
+
+    <div class="animation-box">
+        <div class="lesson-layout">
+            <div class="chocolate" id="chocolate"></div>
+            <div class="steps-panel" id="steps-panel"></div>
+        </div>
+    </div>
+
+    <div class="controls">
+            <button class="button" id="prevBtn">Previous</button>
+            <button class="button" id="nextBtn">Next</button>
+    </div>
+</body>
+
+<script>
+   let chocolate = document.getElementById("chocolate");
+
+// 16 whole bars
+for (let i = 0; i < 16; i++) {
+  let bar = document.createElement("div");
+  bar.classList.add("choc-bar");
+  chocolate.appendChild(bar);
+}
+
+// 1 partial bar: 9 squares, first 7 filled, last 2 empty
+let partial = document.createElement("div");
+partial.classList.add("partial-bar");
+for (let i = 0; i < 9; i++) {
+  let sq = document.createElement("div");
+  sq.classList.add("square");
+  sq.classList.add(i < 4 ? "empty" : "filled");   // 5 filled, 4 empty
+  partial.appendChild(sq);
+}
+chocolate.appendChild(partial);
+
+// pop everything in one at a time
+function popIn() {
+  let items = chocolate.children;
+  for (let i = 0; i < items.length; i++) {
+    setTimeout(() => items[i].classList.add("popped"), i * 120);
+  }
+}
+popIn();
+
+
+const steps = [
+    {
+        question: "How many whole bars did she eat?",
+        answer: "16 whole bars.",
+        why: "These are the whole numbers."
+    },
+    {
+        question: "She found a bar split into 9 squares. How many did she eat?",
+        answer: "4 of 9 — that's 4/9.",
+        why: "4/9 means 4 of 9 equal pieces."
+    },
+    {
+        question: "16 whole bars plus 4/9. How do we write it?",
+        answer: "16 4/9",
+        why: "A whole number + a fraction = a mixed number."
+    },
+    {
+        question: "Can we simplify 4/9?",
+        answer: "Nope — 4 and 9 share no factor. The final answer remains 16 4/9",
+        why: "Only simplify when top and bottom share a factor."
+    }
+];
+
+    let current = 0;
+    let nextBtn = document.getElementById("nextBtn");
+    let prevBtn = document.getElementById("prevBtn");
+    const panel = document.getElementById("steps-panel");
+
+    function showStep(index) {
+        panel.innerHTML = "";
+
+        for (let i = 0; i <= index; i++) {
+            let card = document.createElement("div");
+            card.classList.add("step-card");
+
+            let q = document.createElement("p");
+            q.classList.add("step-question");
+            q.textContent = steps[i].question;
+
+            let a = document.createElement("p");
+            a.classList.add("step-answer");
+            a.textContent = steps[i].answer;
+
+            let w = document.createElement("p");
+            w.classList.add("step-why");
+            w.textContent = steps[i].why;
+
+            card.appendChild(q);
+            card.appendChild(a);
+            card.appendChild(w);
+            panel.appendChild(card);
+
+            if (i < index) {
+                a.classList.add("visible");
+                w.classList.add("visible");
+            }
+
+            if (i === index) {
+                setTimeout(() => { a.classList.add("visible"); }, 3000);
+                setTimeout(() => { w.classList.add("visible"); }, 3500);
+            }
+
+        }
+
+        prevBtn.style.visibility = current === 0 ? "hidden" : "visible";
+        nextBtn.style.visibility = current === steps.length - 1 ? "hidden" : "visible";
+    }
+
+    showStep(0);
+
+    nextBtn.addEventListener("click", function() {
+        if (current === steps.length - 1) return;
+        current++;
+        showStep(current);
+    });
+
+    prevBtn.addEventListener("click", function() {
+        if (current === 0) return;
+        current--;
+        showStep(current);
+    });
+
+    
+</script>

@@ -85,21 +85,19 @@
         .student {
             display: flex;
             transform: scale(0);
-            transition: transform 0.5s ease;
             flex-direction: column;
             align-items: center;
             transition: box-shadow 0.4s ease;
         }
 
         .student.popped {
-            transform:scale(1);
+            transform:scale(1.1);
         }
 
         .head {
             width: 60px;
             height: 60px;
             border-radius: 50px; 
-            background-color: #89532e;
             display:flex;
             justify-content: center;
             align-items: center;
@@ -108,7 +106,6 @@
         .body {
             width: 60px;
             height: 70px;
-            background-color: #ad2981;
             border-radius: 20px 20px 0px 0px;
 
         }
@@ -184,10 +181,9 @@
         </div>
 
     </main>
-    
 
     <script>
-       let highlightTimer;
+        let highlightTimer;
         let classroom = document.getElementById("classroom");
 
         let skinTones = ["#f4c2a1", "#843722", "#ddb0a0", "#593b2b", "#f1c27d"];
@@ -261,94 +257,95 @@
         }
         popInStudents();
 
-        const steps = [
-            {
-                question: "Look at the classroom. How many students are there in total?",
-                answer: "There are 12 students in total.",
-                why: "This is the denominator — the total always goes on the bottom."
-            },
-            {
-                question: "Some students are wearing glasses. Can you count them?",
-                answer: "4 students are wearing glasses.",
-                why: "This is the numerator — the part we care about goes on top."
-            },
-            {
-                question: "So how do we write 4 out of 12 as a fraction?",
-                answer: "We write it as 4/12 — meaning 4 out of every 12.",
-                why: "A fraction is just a part out of whole."
-            },
-            {
-                question: "Can we simplify? Both 4 and 12 can be divided by 4...",
-                answer: "4/12 ÷ 4 = 1/3 — same value, simpler form.",
-                why: "Dividing top and bottom by the same number never changes the fraction's meaning."
-            }
-        ];
+    const steps = [
+        {
+            question: "Look at the classroom. How many students are there in total?",
+            answer: "There are 12 students in total.",
+            why: "This is the denominator — the total always goes on the bottom."
+        },
+        {
+            question: "Some students are wearing glasses. Can you count them?",
+            answer: "4 students are wearing glasses.",
+            why: "This is the numerator — the part we care about goes on top."
+        },
+        {
+            question: "So how do we write 4 out of 12 as a fraction?",
+            answer: "We write it as 4/12 — meaning 4 out of every 12.",
+            why: "A fraction is just a part out of whole."
+        },
+        {
+            question: "Can we simplify? Both 4 and 12 can be divided by 4...",
+            answer: "4/12 ÷ 4 = 1/3 — same value, simpler form.",
+            why: "Dividing top and bottom by the same number never changes the fraction's meaning."
+        }
+    ];
 
-        let current = 0;
-        let nextBtn = document.getElementById("nextBtn");
-        let prevBtn = document.getElementById("prevBtn");
-        const panel = document.getElementById("steps-panel");
+    let current = 0;
+    let nextBtn = document.getElementById("nextBtn");
+    let prevBtn = document.getElementById("prevBtn");
+    const panel = document.getElementById("steps-panel");
 
-        function showStep(index) {
-            clearTimeout(highlightTimer);
-            clearHighlight();
-            panel.innerHTML = "";
+    function showStep(index) {
+        clearTimeout(highlightTimer);
+        clearHighlight();
+        panel.innerHTML = "";
 
-            for (let i = 0; i <= index; i++) {
-                let card = document.createElement("div");
-                card.classList.add("step-card");
+        for (let i = 0; i <= index; i++) {
+            let card = document.createElement("div");
+            card.classList.add("step-card");
 
-                let q = document.createElement("p");
-                q.classList.add("step-question");
-                q.textContent = steps[i].question;
+            let q = document.createElement("p");
+            q.classList.add("step-question");
+            q.textContent = steps[i].question;
 
-                let a = document.createElement("p");
-                a.classList.add("step-answer");
-                a.textContent = steps[i].answer;
+            let a = document.createElement("p");
+            a.classList.add("step-answer");
+            a.textContent = steps[i].answer;
 
-                let w = document.createElement("p");
-                w.classList.add("step-why");
-                w.textContent = steps[i].why;
+            let w = document.createElement("p");
+            w.classList.add("step-why");
+            w.textContent = steps[i].why;
 
-                card.appendChild(q);
-                card.appendChild(a);
-                card.appendChild(w);
-                panel.appendChild(card);
+            card.appendChild(q);
+            card.appendChild(a);
+            card.appendChild(w);
+            panel.appendChild(card);
 
-                if (i < index) {
-                    a.classList.add("visible");
-                    w.classList.add("visible");
-                }
-
-                if (i === index) {
-                    setTimeout(() => { a.classList.add("visible"); }, 3000);
-                    setTimeout(() => { w.classList.add("visible"); }, 3500);
-
-                    if (index === 0) {
-                        highlightTimer = setTimeout(() => { highlight([...Array(12).keys()]); }, 3000);
-                    } else if (index === 1) {
-                        highlightTimer = setTimeout(() => { highlight(glassesIndices); }, 3000);
-                    }
-                }
+            if (i < index) {
+                a.classList.add("visible");
+                w.classList.add("visible");
             }
 
-            prevBtn.style.visibility = current === 0 ? "hidden" : "visible";
-            nextBtn.style.visibility = current === steps.length - 1 ? "hidden" : "visible";
+            if (i === index) {
+                setTimeout(() => { a.classList.add("visible"); }, 3000);
+                setTimeout(() => { w.classList.add("visible"); }, 3500);
+
+                if (index === 0) {
+                    highlightTimer = setTimeout(() => { highlight([...Array(12).keys()]); }, 3000);
+                } else if (index === 1) {
+                    highlightTimer = setTimeout(() => { highlight(glassesIndices); }, 3000);
+                }
+            }
+
         }
 
-        showStep(0);
+        prevBtn.style.visibility = current === 0 ? "hidden" : "visible";
+        nextBtn.style.visibility = current === steps.length - 1 ? "hidden" : "visible";
+    }
 
-        nextBtn.addEventListener("click", function() {
-            if (current === steps.length - 1) return;
-            current++;
-            showStep(current);
-        });
+    showStep(0);
 
-        prevBtn.addEventListener("click", function() {
-            if (current === 0) return;
-            current--;
-            showStep(current);
-        });
+    nextBtn.addEventListener("click", function() {
+        if (current === steps.length - 1) return;
+        current++;
+        showStep(current);
+    });
+
+    prevBtn.addEventListener("click", function() {
+        if (current === 0) return;
+        current--;
+        showStep(current);
+    });
 
     </script>
 </body>

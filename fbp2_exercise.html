@@ -26,19 +26,21 @@
         <div class="main"> 
 
             <div class="page_controls">
-                <a href="fraction-beginner-problem-1.html" class="pageNav_button">← Back</a>
+                <a href="fraction-beginner-problem-2.html" class="pageNav_button">← Back</a>
             </div>
 
             
             <h2>Exercise 1</h2>
-            <p class="problem-statement">There are 30 students in a class. 8 of the students love to read novels.
-            What fraction of the students love to read novels? </p>
+            <p class="problem-statement">Mia filled a large pitcher with 8/13 glasses
+                of orange juice and 6 glasss of guava juice to make a smoothie.
+            </p>
+            <p class="problem-statement">How many glasses of juice was the pitcher field with?</p>
             <p> Write your answer in simplest form.</p>
 
             <input type="text" id="answerInput" placehodler="your answer here">
             <button class="button" id="submitBtn">Check</button>
 
-            <p class="hint">Write your answer as a fraction, e.g. 1/5 </p>
+            <p class="hint"></p>
 
             <p id="feedback"></p>
         
@@ -57,23 +59,19 @@
                 feedback.style.color = "blue";
                 return;
             }
-            if(userAnswer === "4/15") {
+            if(userAnswer === "6 8/13") {
                 feedback.textContent = "Correct✅ Lets go!";
                 feedback.style.color = "green";
-                document.getElementById("answerInput").value = "4/15";
+                document.getElementById("answerInput").value = "6 8/13";
                 return;
             }else {
                 attempts++;
                 if (attempts >= 3) {
-                    feedback.textContent = "The answer is 4/15. Keep practicing!";
+                    feedback.textContent = "The answer is 6 8/13. Keep practicing!";
                     feedback.style.color = "red";
                 } else{
                     feedback.textContent = "Not quite - try again!";
                     feedback.style.color = "red";
-                      if(userAnswer === "8/30") {
-                        feedback.textContent = "Simplify it!";
-                        feedback.style.color = "purple";
-                    }
                 }
             }
             document.getElementById("answerInput").value = "";
