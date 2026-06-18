@@ -80,26 +80,35 @@
     .chocolate {
         display: flex;
         flex-wrap: wrap;
-        gap: 25px;
+        gap: 30px;
         align-items: center;
-        max-width: 400px;
+        max-width: 500px;
         margin: 40px auto 0 auto;
         padding: 30px;
     }
 
     /* a whole bar — true 3x3 of equal squares */
     .choc-bar {
-        width: 60px;
-        height: 60px;
-        border-radius: 8px;
-        background-color: #7B4A26;
-        background-image:
-            repeating-linear-gradient(0deg,  rgba(0,0,0,.28) 0 1px, transparent 1px 20px),
-            repeating-linear-gradient(90deg, rgba(0,0,0,.28) 0 1px, transparent 1px 20px);
+        display: grid;
+        grid-template-columns: repeat(3, 20px);
+        grid-template-rows: repeat(3, 20px);
+        gap: 0;
         transform: scale(0);
         transition: transform 0.5s ease;
     }
-    .choc-bar.popped { transform: scale(1); }
+
+    .choc-bar.popped { 
+        transform: scale(1); 
+    }
+
+    .choc-bar.eaten .square {
+        border: 2px dashed #C2A98C;
+        background-color: transparent;
+    }
+
+    .choc-bar:not(.eaten) .square.filled {
+        background-color: #7B4A26;
+    }
 
     /* the 7/9 partial bar (3x3 grid, matches the whole bars) */
     .partial-bar {
@@ -115,6 +124,26 @@
     .square { border-radius: 4px; }
     .square.filled { background-color: #7B4A26; }
     .square.empty  { border: 2px dashed #C2A98C; }
+
+    .whole-bars-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    border-radius: 12px;
+    padding: 10px;
+    width: 350px;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    }
+
+    .whole-bars-group.visible {
+        opacity: 1;
+    }
+
+    .partial-bar-container {
+        display: flex;
+        justify-content: center;
+    } 
 </style>
 
 <body>
@@ -138,7 +167,7 @@
 
     <div class="animation-box">
         <div class="lesson-layout">
-            <div class="chocolate" id="chocolate"></div>
+        <div class="chocolate" id="chocolate"></div>
             <div class="steps-panel" id="steps-panel"></div>
         </div>
     </div>
@@ -152,32 +181,50 @@
 <script>
    let chocolate = document.getElementById("chocolate");
 
-// 16 whole bars
-for (let i = 0; i < 16; i++) {
-  let bar = document.createElement("div");
-  bar.classList.add("choc-bar");
-  chocolate.appendChild(bar);
+    // Create 16 whole bars
+    let wholeBars = [];
+    for (let i = 0; i < 16; i++) {
+    let bar = document.createElement("div");
+    bar.classList.add("choc-bar");
+    wholeBars.push(bar);
+
+    for (let j = 0; j < 9; j++) {
+    let sq = document.createElement("div");
+    sq.classList.add("square");
+    sq.classList.add("filled");
+    bar.appendChild(sq);
+    }
+
+    chocolate.appendChild(bar);
 }
 
-// 1 partial bar: 9 squares, first 7 filled, last 2 empty
-let partial = document.createElement("div");
-partial.classList.add("partial-bar");
-for (let i = 0; i < 9; i++) {
-  let sq = document.createElement("div");
-  sq.classList.add("square");
-  sq.classList.add(i < 4 ? "empty" : "filled");   // 5 filled, 4 empty
-  partial.appendChild(sq);
-}
-chocolate.appendChild(partial);
+    // Create partial bar: 9 squares, 4 filled (4/9), 5 empty
+    let partial = document.createElement("div");
+    partial.classList.add("partial-bar");
+    for (let i = 0; i < 9; i++) {
+    let sq = document.createElement("div");
+    sq.classList.add("square");
+    sq.classList.add(i < 4 ? "empty" : "filled");   // 5 filled, 4 empty
+    partial.appendChild(sq);
+    }
+    chocolate.appendChild(partial);
 
-// pop everything in one at a time
-function popIn() {
-  let items = chocolate.children;
-  for (let i = 0; i < items.length; i++) {
-    setTimeout(() => items[i].classList.add("popped"), i * 120);
-  }
-}
-popIn();
+    // ANIMATION SEQUENCE:
+    function animateSequence() {
+    // Step 1: Pop in all 16 whole bars (solid)
+    for (let i = 0; i < wholeBars.length; i++) {
+        setTimeout(() => wholeBars[i].classList.add("popped"), i * 120);
+    }
+    
+    // After all bars popped in, transition them to dotted (eaten)
+    // wholeBars.length * 120 = 1920ms when last bar finishes popping
+    setTimeout(() => {
+        wholeBars.forEach(bar => bar.classList.add("eaten"));
+    }, wholeBars.length * 120 + 300);  // 300ms buffer after last pop
+    }
+
+    animateSequence();
+
 
 
 const steps = [
@@ -198,7 +245,7 @@ const steps = [
     },
     {
         question: "Can we simplify 4/9?",
-        answer: "Nope — 4 and 9 share no factor. The final answer remains 16 4/9",
+        answer: "Nope — 4 and 9 share no factor. So, the final answer remains → 16 4/9",
         why: "Only simplify when top and bottom share a factor."
     }
 ];
@@ -240,6 +287,12 @@ const steps = [
             if (i === index) {
                 setTimeout(() => { a.classList.add("visible"); }, 3000);
                 setTimeout(() => { w.classList.add("visible"); }, 3500);
+            }
+
+            if(index === 1){
+                setTimeout(() => {
+                    partial.classList.add("popped");
+                }, 3000);
             }
 
         }
