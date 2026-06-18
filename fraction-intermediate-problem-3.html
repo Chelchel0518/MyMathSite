@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyMathSite</title>
+    <link rel="stylesheet" href="styleProblem.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Luckiest+Guy&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+ 
+<style>
+ 
+    .fraction-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        min-width: 400px;
+        margin: 40px auto 0 auto;
+        padding: 30px;
+        font-family: monospace;
+        font-size: 64px;
+        font-weight: 500;
+        color: #1a1a1a;
+        min-height: 200px;
+    }
+ 
+    .fraction-display {
+        text-align: center;
+    }
+ 
+    .fraction-num, .fraction-den {
+        position: relative;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+    }
+ 
+    .fraction-num:last-of-type {
+        margin-bottom: 0;
+    }
+ 
+    .fraction-line {
+        height: 3px;
+        background: #1a1a1a;
+        margin: 16px 0;
+    }
+ 
+    .num-text, .den-text {
+        display: inline-block;
+        transition: opacity 0.4s ease;
+    }
+ 
+    .num-text.struck, .den-text.struck {
+        opacity: 0.3;
+    }
+ 
+    .divisor-display {
+        font-size: 48px;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        min-width: 80px;
+        text-align: center;
+    }
+</style>
+ 
+<body>
+    <nav>
+        <a href="layout.html" class="logo">
+        <span class="accent">My</span>Math<span class="accent">Site</span>
+        </a>
+    </nav>
+ 
+    <div class="page_controls">
+        <a href="fractions.html" class="pageNav_button">← Back</a>
+        <a href="fbp3_exercise.html" class="tryIt_button">Try it yourself</a>
+    </div>
+ 
+    <h2>Problem 3</h2>
+    <p class="problem-statement">
+        A garden produces 90 tomatoes. You pick 60 of them.
+    </p>
+    <p>Simplify the fraction to see how much you harvested.</p>
+ 
+    <div class="animation-box">
+        <div class="lesson-layout">
+            <div class="fraction-container">
+                <div class="fraction-display">
+                    <div class="fraction-num">
+                        <span class="num-text">60</span>
+                    </div>
+                    <div class="fraction-line"></div>
+                    <div class="fraction-den">
+                        <span class="den-text">90</span>
+                    </div>
+                </div>
+                <div class="divisor-display" id="divisor-display">
+                    <span id="divisor-text"></span>
+                </div>
+            </div>
+            <div class="steps-panel" id="steps-panel"></div>
+        </div>
+    </div>
+ 
+    <div class="controls">
+        <button class="button" id="prevBtn">← Previous</button>
+        <button class="button" id="nextBtn">Next →</button>
+    </div>
+</body>
+ 
+<script>
+    const numText = document.querySelector(".num-text");
+    const denText = document.querySelector(".den-text");
+    const divisorDisplay = document.getElementById("divisor-display");
+    const divisorText = document.getElementById("divisor-text");
+    const stepsPanel = document.getElementById("steps-panel");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+ 
+    const steps = [
+        { num: "60", den: "90", divisor: "", info: "Start: 60/90" },
+        { num: "30", den: "45", divisor: "÷2", info: "Divide both by 2 → 30/45" },
+        { num: "10", den: "15", divisor: "÷3", info: "Divide both by 3 → 10/15" },
+        { num: "2", den: "3", divisor: "÷5", info: "2 and 3 have no common divisors. This is simplified!" }
+    ];
+ 
+    let current = 0;
+ 
+    async function showStep(index) {
+        const step = steps[index];
+        
+        if (index === 0) {
+            numText.textContent = "60";
+            denText.textContent = "90";
+            numText.classList.remove("struck");
+            denText.classList.remove("struck");
+            divisorDisplay.style.opacity = "0";
+        } else {
+            const prevStep = steps[index - 1];
+            numText.textContent = prevStep.num;
+            denText.textContent = prevStep.den;
+            
+            // Step 1: Show divisor briefly
+            divisorText.textContent = step.divisor;
+            divisorDisplay.style.opacity = "1";
+            
+            await new Promise(r => setTimeout(r, 400));
+            
+            // Step 2: Strike through
+            numText.classList.add("struck");
+            denText.classList.add("struck");
+            
+            // Step 3: Divisor disappears, new numbers appear
+            await new Promise(r => setTimeout(r, 400));
+            divisorDisplay.style.opacity = "0";
+            numText.textContent = step.num;
+            denText.textContent = step.den;
+            numText.classList.remove("struck");
+            denText.classList.remove("struck");
+        }
+        
+        // Update steps panel
+        stepsPanel.innerHTML = "";
+        for (let i = 0; i <= index; i++) {
+            let card = document.createElement("div");
+            card.classList.add("step-card");
+            
+            let q = document.createElement("p");
+            q.classList.add("step-question");
+            q.textContent = "Step " + i + ":";
+            
+            let info = document.createElement("p");
+            info.classList.add("step-answer");
+            info.textContent = steps[i].info;
+            
+            card.appendChild(q);
+            card.appendChild(info);
+            stepsPanel.appendChild(card);
+            
+            if (i < index) {
+                info.classList.add("visible");
+            } else {
+                setTimeout(() => { info.classList.add("visible"); }, 500);
+            }
+        }
+        
+        prevBtn.style.visibility = current === 0 ? "hidden" : "visible";
+        nextBtn.style.visibility = current === steps.length - 1 ? "hidden" : "visible";
+    }
+ 
+    showStep(0);
+ 
+    nextBtn.addEventListener("click", function() {
+        if (current === steps.length - 1) return;
+        current++;
+        showStep(current);
+    });
+ 
+    prevBtn.addEventListener("click", function() {
+        if (current === 0) return;
+        current--;
+        showStep(current);
+    });
+</script>
+ 
+</html>
