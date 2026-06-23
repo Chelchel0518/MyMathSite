@@ -25,7 +25,7 @@
         justify-content: center;
         align-items: center;
         gap: 20px;
-        min-width: 500px;
+        min-width: 450px;
         margin: 40px auto 0 auto;
         padding: 30px;
         font-family: monospace;
@@ -128,14 +128,16 @@
     const stepsPanel = document.getElementById("steps-panel");
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
+    
  
     const steps = [
-        { num: "60", den: "90", divisor: "", info: "Start: 60/90" },
-        { num: "30", den: "45", divisor: "÷2", info: "Divide both by 2 → 30/45" },
-        { num: "10", den: "15", divisor: "÷3", info: "Divide both by 3 → 10/15" },
-        { num: "2", den: "3", divisor: "÷5", info: "2 and 3 have no common divisors. This is simplified!" }
+        { num: "60", den: "90", divisor: "", info: "Start: 60/90", why: "Fractions will always be part over the whole."},
+        { num: "30", den: "45", divisor: "÷2", info: "Divide both by 2 → 30/45", 
+          why: "Simplifying a fraction means finding an equivalent form of the original fraction."},
+        { num: "10", den: "15", divisor: "÷3", info: "Divide both by 3 → 10/15", why: "We simplify further as necessary to get its simplest form."},
+        { num: "2", den: "3", divisor: "÷5", info: "2 and 3 have no common divisors", why: "This is simplified!" }
     ];
- 
+
     let current = 0;
  
     async function showStep(index) {
@@ -184,15 +186,22 @@
             let info = document.createElement("p");
             info.classList.add("step-answer");
             info.textContent = steps[i].info;
+
+            let why = document.createElement("p");
+            why.classList.add("step-why");
+            why.textContent = steps[i].why;
             
             card.appendChild(q);
             card.appendChild(info);
+            card.appendChild(why);
             stepsPanel.appendChild(card);
             
             if (i < index) {
                 info.classList.add("visible");
+                why.classList.add("visible");
             } else {
                 setTimeout(() => { info.classList.add("visible"); }, 500);
+                setTimeout(() => { why.classList.add("visible"); }, 950);
             }
         }
         
