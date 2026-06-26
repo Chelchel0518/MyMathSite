@@ -36,12 +36,14 @@
         margin-bottom: 2rem;
         min-height: 250px;
         cursor: crosshair;
+        text-align: center;
+
     }
  
     .fraction-columns {
         display: flex;
         justify-content: center;
-        gap: 4rem;
+        gap: 2rem;
         position: relative;
         z-index: 2;
     }
@@ -52,12 +54,8 @@
 
     .fraction-column:first-child {
         border-right: 3px solid #ddd;  /* ADD THIS - divider line */
-        padding-right: 0;
     }
 
-    .fraction-column:last-child {
-        padding-left: 8rem;
-    }
  
     .column-header {
         font-size: 18px;
@@ -82,7 +80,7 @@
         font-weight: 500;
         color: var(--color-text-primary);
         transition: all 0.2s;
-        text-align: left;
+        text-align: center;
         user-select: none;
     }
  
@@ -339,7 +337,7 @@
         const leftRect = leftBtn.getBoundingClientRect();
         const canvasRect = canvas.getBoundingClientRect();
  
-        const x1 = leftRect.right - canvasRect.left - 270;
+        const x1 = leftRect.right - canvasRect.left - 150;
         const y1 = leftRect.top - canvasRect.top + leftRect.height / 2;
         const x2 = e.clientX - canvasRect.left;
         const y2 = e.clientY - canvasRect.top;
@@ -417,9 +415,9 @@
         const rightRect = rightBtn.getBoundingClientRect();
         const canvasRect = canvas.getBoundingClientRect();
  
-        const x1 = leftRect.left- canvasRect.left + 60;
+        const x1 = leftRect.right- canvasRect.left - 150;
         const y1 = leftRect.top - canvasRect.top + leftRect.height / 2;
-        const x2 = rightRect.left - canvasRect.left;
+        const x2 = rightRect.left - canvasRect.left + 150;
         const y2 = rightRect.top - canvasRect.top + rightRect.height / 2;
  
         const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
