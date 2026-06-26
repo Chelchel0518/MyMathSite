@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyMathSite - Intermediate Problem 1</title>
+    <link rel="stylesheet" href="styleProblem.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Luckiest+Guy&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+
+<style>
+    .lesson-layout {
+    padding: 25px;
+    display: grid;
+    grid-template-columns: 500px 1fr;
+    gap: 50px;
+    align-items: start;
+}
+
+.animation-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 550px;
+    height: auto;
+    padding: 30px;
+}
+
+.steps-panel {
+    width: 100%;
+    max-height: 500px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+    .step-card {
+        background: white;
+        border-radius: 12px;
+        padding: 10px 12px;
+        margin-bottom: 12px;
+        border: 1px solid #8b8a88;
+        max-width: 500px;
+    }
+
+    .step-question {
+        font-size: 15px;
+        color: black;
+        margin-bottom: 8px;
+    }
+
+    .step-answer {
+        font-size: 16px;
+        font-weight: bold;
+        color: #1D9E75;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+    }
+
+    .step-why {
+        font-size: 13px;
+        color: gray;
+        font-style: italic;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+        margin-top: 6px;
+    }
+
+    .visible {
+        opacity: 1 !important;
+    }
+
+    #prevBtn {
+        visibility: hidden;
+    }
+
+    #nextBtn {
+        visibility: visible;
+    }
+
+    .cake-display {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .cake-display svg {
+        width: 90px;
+        height: 90px;
+    }
+
+    .cake-label {
+        font-size: 14px;
+        font-weight: 500;
+        color: #1a1a1a;
+    }
+
+    .arrow {
+        font-size: 28px;
+        color: #666;
+    }
+
+    .explanation {
+        font-size: 13px;
+        color: #666;
+        text-align: center;
+        max-width: 400px;
+        margin: 1rem auto;
+        line-height: 1.6;
+    }
+
+    .feedback {
+        font-size: 14px;
+        font-weight: 500;
+        min-height: 20px;
+        margin: 1rem 0;
+        text-align: center;
+    }
+
+    .feedback.correct {
+        color: #1D9E75;
+    }
+
+    .feedback.incorrect {
+        color: #E24B4A;
+    }
+
+    .feedback.neutral {
+        color: #888;
+    }
+
+    .interactive-cake svg {
+        cursor: pointer;
+    }
+    
+    .reinforcement-cakes {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin: 2rem 0;
+    }
+
+    .small-cake {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .small-cake svg {
+        width: 70px;
+        height: 70px;
+        opacity: 0;
+        animation: slideIn 0.6s ease-out forwards;
+    }
+
+    .small-cake-label {
+        font-size: 12px;
+        font-weight: 500;
+        color: #1a1a1a;
+    }
+
+    .equals-sign {
+        font-size: 20px;
+        color: #666;
+        opacity: 0;
+        animation: slideIn 0.6s ease-out forwards;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<body>
+    <nav>
+        <a href="layout.html" class="logo">
+        <span class="accent">My</span>Math<span class="accent">Site</span>
+        </a>
+    </nav>
+
+    <div class="page_controls">
+        <a href="fractions.html" class="pageNav_button">← Back</a>
+        <a href="fip1_exercise.html" class="tryIt_button">Try it yourself</a>
+    </div>
+
+    <h2>Problem 1</h2>
+    <p class="problem-statement">
+        A cake is divided and served different ways.
+    </p>
+    <p>See how the same amount can be shown as different fractions.</p>
+
+    <div class="animation-box">
+        <div class="lesson-layout">
+            <div id="animation-container">
+                <!-- Phase 1: Transformation -->
+                <div id="phase1" style="position: relative; min-height: auto;">
+                    <span class="arrow" style="position: absolute; right: 150px; top: 75px; font-size: 45px; color: #666;">↓</span>
+                    
+                    <div style="margin-left: 50px;">
+                        <div class="cake-display">
+                            <svg viewBox="0 0 100 100" id="cake-before">
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="#333" stroke-width="1.5"/>
+                                <path d="M 50 50 L 50 5 A 45 45 0 0 1 50 5 Z" fill="#D85A30"/>
+                                <path d="M 50 50 L 50 5 A 45 45 0 0 0 50 95 Z" fill="#E8D4C8"/>
+                            </svg>
+                            <span class="cake-label">1/2</span>
+                        </div>
+                        
+                        <div class="cake-display" style="margin-top: 20px;">
+                            <svg viewBox="0 0 100 100" id="cake-after">
+                                <defs>
+                                    <pattern id="cross1" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+                                        <path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2" stroke="#8B4423" stroke-width="0.5" opacity="0.6"/>
+                                    </pattern>
+                                </defs>
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="#333" stroke-width="1.5"/>
+                                <line x1="50" y1="5" x2="50" y2="95" stroke="#333" stroke-width="1.5" opacity="0" id="divider-line" style="transition: opacity 0.6s ease;"/>
+                                <path d="M 50 50 L 50 5 A 45 45 0 0 1 95 50 Z" fill="#D85A30" stroke="#333" stroke-width="1"/>
+                                <path d="M 50 50 L 50 5 A 45 45 0 0 1 95 50 Z" fill="url(#cross1)" opacity="0" id="pattern1" style="transition: opacity 0.8s ease;"/>
+                                <path d="M 50 50 L 95 50 A 45 45 0 0 1 50 95 Z" fill="#D85A30" stroke="#333" stroke-width="1"/>
+                                <path d="M 50 50 L 95 50 A 45 45 0 0 1 50 95 Z" fill="url(#cross1)" opacity="0" id="pattern2" style="transition: opacity 1s ease;"/>
+                                <path d="M 50 50 L 50 95 A 45 45 0 0 1 5 50 Z" fill="#E8D4C8" stroke="#333" stroke-width="1"/>
+                                <path d="M 50 50 L 5 50 A 45 45 0 0 1 50 5 Z" fill="#E8D4C8" stroke="#333" stroke-width="1"/>
+                            </svg>
+                            <span class="cake-label">2/4</span>
+                        </div>
+                    </div>
+                </div>
+
+<div class="explanation" id="explanation1">Division lines appear, splitting each slice in half. The shaded amount stays the same — just cut into more pieces!</div>
+
+                <!-- Phase 2: Interactive Practice -->
+                <div id="phase2" style="display: none; text-align: center;">
+                    <p style="font-size: 16px; color: #244193; margin: 0 0 1rem; font-weight: 500;">Now you try! Click the 2 shaded pieces to show 2/4</p>
+                    <div class="interactive-cake">
+                        <svg viewBox="0 0 100 100" id="cake-practice" width="100" height="100">
+                            <defs>
+                                <pattern id="cross2" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+                                    <path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2" stroke="#8B4423" stroke-width="0.5" opacity="0.6"/>
+                                </pattern>
+                            </defs>
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#333" stroke-width="1.5"/>
+                            <line x1="50" y1="5" x2="50" y2="95" stroke="#333" stroke-width="1.5"/>
+                            <path id="slice-0" d="M 50 50 L 50 5 A 45 45 0 0 1 95 50 Z" fill="#D85A30" stroke="#333" stroke-width="1" stroke-linejoin="round"/>
+                            <path id="slice-0-pattern" d="M 50 50 L 50 5 A 45 45 0 0 1 95 50 Z" fill="url(#cross2)" stroke="none"/>
+                            <path id="slice-1" d="M 50 50 L 95 50 A 45 45 0 0 1 50 95 Z" fill="#D85A30" stroke="#333" stroke-width="1" stroke-linejoin="round"/>
+                            <path id="slice-1-pattern" d="M 50 50 L 95 50 A 45 45 0 0 1 50 95 Z" fill="url(#cross2)" stroke="none"/>
+                            <path d="M 50 50 L 50 95 A 45 45 0 0 1 5 50 Z" fill="#E8D4C8" stroke="#333" stroke-width="1" stroke-linejoin="round"/>
+                            <path d="M 50 50 L 5 50 A 45 45 0 0 1 50 5 Z" fill="#E8D4C8" stroke="#333" stroke-width="1" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="feedback" id="feedback"></div>
+                </div>
+
+                <!-- Phase 3: Reinforcement with progression -->
+                <div id="phase3" style="display: none; text-align: center;">
+                    <p style="font-size: 16px; color: #1a1a1a; margin: 0 0 1.5rem; font-weight: 500;">Watch the pattern continue...</p>
+                    
+                    <div class="reinforcement-cakes" id="cakes-row">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+
+                    <p style="font-size: 13px; color: #888; max-width: 450px; margin: 2rem auto 0; line-height: 1.6;">Same amount shaded every time. Only the number of slices changes. This is what equivalent fractions are! 1/2 = 2/4 = 4/8 = 8/16</p>
+                </div>
+            </div>
+
+            <div class="steps-panel" id="steps-panel"></div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="button" id="prevBtn">← Previous</button>
+        <button class="button" id="nextBtn">Next →</button>
+    </div>
+</body>
+
+<script>
+    let selectedSlices = [];
+    const correctSlices = [0, 1];
+    let currentPhase = 1;
+    let current = 0;
+
+    const steps = [
+        { info: "Watch: 1/2 becomes 2/4", why: "Division lines split each slice. Same shaded amount, more pieces." },
+        { info: "Practice: Click the 2 shaded pieces", why: "This helps you see that 2/4 is the same as 1/2." },
+        { info: "The pattern continues!", why: "1/2 = 2/4 = 4/8 = 8/16. Always the same amount, different slices." }
+    ];
+
+    function createCakeSVG(num, denom, size = 70, delayIndex = 0) {
+        const svgNS = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(svgNS, "svg");
+        svg.setAttribute("viewBox", "0 0 100 100");
+        svg.setAttribute("width", size);
+        svg.setAttribute("height", size);
+        svg.style.animation = `slideIn 0.6s ease-out ${delayIndex * 0.3}s forwards`;
+
+        const defs = document.createElementNS(svgNS, "defs");
+        const pattern = document.createElementNS(svgNS, "pattern");
+        pattern.setAttribute("id", `cross-${num}-${denom}-${delayIndex}`);
+        pattern.setAttribute("x", "0");
+        pattern.setAttribute("y", "0");
+        pattern.setAttribute("width", "4");
+        pattern.setAttribute("height", "4");
+        pattern.setAttribute("patternUnits", "userSpaceOnUse");
+        
+        const path = document.createElementNS(svgNS, "path");
+        path.setAttribute("d", "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2");
+        path.setAttribute("stroke", "#8B4423");
+        path.setAttribute("stroke-width", "0.5");
+        path.setAttribute("opacity", "0.6");
+        pattern.appendChild(path);
+        defs.appendChild(pattern);
+        svg.appendChild(defs);
+
+        // Circle outline
+        const circle = document.createElementNS(svgNS, "circle");
+        circle.setAttribute("cx", "50");
+        circle.setAttribute("cy", "50");
+        circle.setAttribute("r", "45");
+        circle.setAttribute("fill", "none");
+        circle.setAttribute("stroke", "#333");
+        circle.setAttribute("stroke-width", "1.5");
+        svg.appendChild(circle);
+
+        // Draw slices
+        const sliceAngle = 360 / denom;
+        for (let i = 0; i < denom; i++) {
+            const angle = (i * sliceAngle - 90) * (Math.PI / 180);
+            const nextAngle = ((i + 1) * sliceAngle - 90) * (Math.PI / 180);
+            
+            const x1 = 50 + 45 * Math.cos(angle);
+            const y1 = 50 + 45 * Math.sin(angle);
+            const x2 = 50 + 45 * Math.cos(nextAngle);
+            const y2 = 50 + 45 * Math.sin(nextAngle);
+            
+            const largeArc = sliceAngle > 180 ? 1 : 0;
+            const pathD = `M 50 50 L ${x1} ${y1} A 45 45 0 ${largeArc} 1 ${x2} ${y2} Z`;
+            
+            // Shaded slices
+            if (i < num) {
+                const slicePath = document.createElementNS(svgNS, "path");
+                slicePath.setAttribute("d", pathD);
+                slicePath.setAttribute("fill", "#D85A30");
+                slicePath.setAttribute("stroke", "#333");
+                slicePath.setAttribute("stroke-width", "1");
+                svg.appendChild(slicePath);
+
+                const patternPath = document.createElementNS(svgNS, "path");
+                patternPath.setAttribute("d", pathD);
+                patternPath.setAttribute("fill", `url(#cross-${num}-${denom}-${delayIndex})`);
+                patternPath.setAttribute("stroke", "none");
+                svg.appendChild(patternPath);
+            } else {
+                // Unshaded slices
+                const slicePath = document.createElementNS(svgNS, "path");
+                slicePath.setAttribute("d", pathD);
+                slicePath.setAttribute("fill", "#E8D4C8");
+                slicePath.setAttribute("stroke", "#333");
+                slicePath.setAttribute("stroke-width", "1");
+                svg.appendChild(slicePath);
+            }
+        }
+
+        return svg;
+    }
+
+    function setupPhase2Listeners() {
+        const slices = [
+            { id: "slice-0", patternId: "slice-0-pattern", index: 0 },
+            { id: "slice-1", patternId: "slice-1-pattern", index: 1 }
+        ];
+
+        slices.forEach(slice => {
+            document.getElementById(slice.id).addEventListener("click", (e) => toggleSlice(slice.index, e));
+            document.getElementById(slice.patternId).addEventListener("click", (e) => toggleSlice(slice.index, e));
+        });
+    }
+
+    function toggleSlice(index, e) {
+        e.stopPropagation();
+        if (selectedSlices.includes(index)) {
+            selectedSlices = selectedSlices.filter(i => i !== index);
+        } else {
+            selectedSlices.push(index);
+        }
+        
+        const feedback = document.getElementById("feedback");
+        const isCorrect = selectedSlices.length === 2 && selectedSlices.every(i => correctSlices.includes(i));
+        
+        if (isCorrect) {
+            feedback.className = "feedback correct";
+            feedback.innerHTML = "✓ Correct! You found 2/4!";
+        } else if (selectedSlices.length > 0 && selectedSlices.length < 2) {
+            feedback.className = "feedback neutral";
+            feedback.innerHTML = "Click one more shaded piece...";
+        } else if (selectedSlices.length > 2) {
+            feedback.className = "feedback incorrect";
+            feedback.innerHTML = "That's too many! Try again.";
+        } else {
+            feedback.className = "feedback";
+            feedback.innerHTML = "";
+        }
+    }
+
+    function buildPhase3() {
+        const cakesRow = document.getElementById("cakes-row");
+        cakesRow.innerHTML = "";
+        
+        const fractions = [
+            { num: 1, denom: 2, label: "1/2" },
+            { num: 2, denom: 4, label: "2/4" },
+            { num: 4, denom: 8, label: "4/8" },
+            { num: 8, denom: 16, label: "8/16" }
+        ];
+
+        fractions.forEach((frac, index) => {
+            const cakeDiv = document.createElement("div");
+            cakeDiv.classList.add("small-cake");
+            
+            const svg = createCakeSVG(frac.num, frac.denom, 70, index);
+            cakeDiv.appendChild(svg);
+            
+            const label = document.createElement("span");
+            label.classList.add("small-cake-label");
+            label.textContent = frac.label;
+            cakeDiv.appendChild(label);
+            
+            cakesRow.appendChild(cakeDiv);
+            
+            // Add equals sign between cakes
+            if (index < fractions.length - 1) {
+                const equals = document.createElement("span");
+                equals.classList.add("equals-sign");
+                equals.textContent = "=";
+                equals.style.animationDelay = `${(index + 0.5) * 0.3}s`;
+                cakesRow.appendChild(equals);
+            }
+        });
+    }
+
+    function goToPhase2() {
+        currentPhase = 2;
+        document.getElementById("phase1").style.display = "none";
+        document.getElementById("explanation1").style.display = "none";
+        document.getElementById("phase2").style.display = "block";
+        
+        // Trigger animation
+        setTimeout(() => {
+            document.getElementById("divider-line").style.opacity = "1";
+            document.getElementById("pattern1").style.opacity = "1";
+            document.getElementById("pattern2").style.opacity = "1";
+        }, 100);
+        
+        setupPhase2Listeners();
+        current = 1;
+        showStep(current);
+    }
+
+    function goToPhase3() {
+        currentPhase = 3;
+        document.getElementById("phase2").style.display = "none";
+        document.getElementById("phase3").style.display = "block";
+        buildPhase3();
+        current = 2;
+        showStep(current);
+    }
+
+    function showStep(index) {
+        const stepsPanel = document.getElementById("steps-panel");
+        stepsPanel.innerHTML = "";
+        
+        for (let i = 0; i <= index; i++) {
+            let card = document.createElement("div");
+            card.classList.add("step-card");
+            
+            let q = document.createElement("p");
+            q.classList.add("step-question");
+            q.textContent = "Step " + (i + 1) + ":";
+            
+            let info = document.createElement("p");
+            info.classList.add("step-answer");
+            info.textContent = steps[i].info;
+            
+            let why = document.createElement("p");
+            why.classList.add("step-why");
+            why.textContent = steps[i].why;
+            
+            card.appendChild(q);
+            card.appendChild(info);
+            card.appendChild(why);
+            stepsPanel.appendChild(card);
+            
+            if (i < index) {
+                info.classList.add("visible");
+                why.classList.add("visible");
+            } else {
+                setTimeout(() => { info.classList.add("visible"); }, 500);
+                setTimeout(() => { why.classList.add("visible"); }, 800);
+            }
+        }
+    }
+
+    function updateButtons() {
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        
+        if (currentPhase === 1) {
+            prevBtn.style.visibility = "hidden";
+            nextBtn.style.visibility = "visible";
+        } else if (currentPhase === 2) {
+            prevBtn.style.visibility = "visible";
+            nextBtn.style.visibility = "visible";
+        } else if (currentPhase === 3) {
+            prevBtn.style.visibility = "visible";
+            nextBtn.style.visibility = "hidden";
+        }
+    }
+
+    // Back button
+    document.getElementById("prevBtn").addEventListener("click", function() {
+        if (currentPhase === 2) {
+            currentPhase = 1;
+            document.getElementById("phase2").style.display = "none";
+            document.getElementById("phase1").style.display = "block";
+            document.getElementById("explanation1").style.display = "block";
+            current = 0;
+            showStep(current);
+        } else if (currentPhase === 3) {
+            currentPhase = 2;
+            document.getElementById("phase3").style.display = "none";
+            document.getElementById("phase2").style.display = "block";
+            current = 1;
+            showStep(current);
+        }
+        updateButtons();
+    });
+
+    // Next button
+    document.getElementById("nextBtn").addEventListener("click", function() {
+        if (currentPhase === 1) {
+            goToPhase2();
+        } else if (currentPhase === 2) {
+            goToPhase3();
+        }
+        updateButtons();
+    });
+
+    // Initial setup
+    showStep(0);
+    updateButtons();
+    
+    // Trigger initial animation on load
+    setTimeout(() => {
+        document.getElementById("divider-line").style.opacity = "1";
+        document.getElementById("pattern1").style.opacity = "1";
+        document.getElementById("pattern2").style.opacity = "1";
+    }, 500);
+</script>
+
+</html>

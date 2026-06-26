@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyMathSite</title>
+    <link rel="stylesheet" href="styleProblem.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Luckiest+Guy&display=swap" rel="stylesheet">
+</head>
+
+<style>
+    .exercise-container {
+        max-width: 900px;
+        margin: 40px auto 0;
+        padding: 30px 10px 0 0;
+    }
+ 
+    .exercise-prompt {
+        font-size: 16px;
+        color: var(--color-text-primary);
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+ 
+    .matching-canvas {
+        position: relative;
+        background: var(--color-background-secondary);
+        border-radius: 12px;
+        padding: 1rem 2rem;
+        margin-bottom: 2rem;
+        min-height: 250px;
+        cursor: crosshair;
+    }
+ 
+    .fraction-columns {
+        display: flex;
+        justify-content: center;
+        gap: 4rem;
+        position: relative;
+        z-index: 2;
+    }
+ 
+    .fraction-column {
+        flex: 1;
+    }
+
+    .fraction-column:first-child {
+        border-right: 3px solid #ddd;  /* ADD THIS - divider line */
+        padding-right: 0;
+    }
+
+    .fraction-column:last-child {
+        padding-left: 8rem;
+    }
+ 
+    .column-header {
+        font-size: 18px;
+        color: var(--color-text-secondary);
+        margin-bottom: 16px;
+        font-weight: 600;
+    }
+ 
+    .fraction-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+ 
+    .fraction-btn {
+        padding: 12px 16px;
+        background: var(--color-background-primary);
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: 8px;
+        cursor: grab;
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        transition: all 0.2s;
+        text-align: left;
+        user-select: none;
+    }
+ 
+    .fraction-btn:hover {
+        background: var(--color-background-secondary);
+        border-color: var(--color-border-secondary);
+    }
+ 
+    .fraction-btn.matched {
+        background: var(--color-background-success);
+        border-color: var(--color-border-success);
+        color: var(--color-text-success);
+        cursor: default;
+        pointer-events: none;
+    }
+ 
+    .fraction-btn.active {
+        background: var(--color-background-info);
+        border-color: var(--color-border-info);
+        color: var(--color-text-info);
+        cursor: grabbing;
+    }
+ 
+    svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+    }
+ 
+    .feedback {
+        font-size: 14px;
+        font-weight: 500;
+        min-height: 20px;
+        margin-top: 1rem;
+        text-align: center;
+    }
+ 
+    .feedback.correct {
+        color: #1D9E75;
+    }
+ 
+    .feedback.incorrect {
+        color: #E24B4A;
+    }
+ 
+    .progress {
+        text-align: center;
+        font-size: 13px;
+        color: var(--color-text-secondary);
+        margin-bottom: 1.5rem;
+    }
+ 
+    .progress-bar {
+        width: 100%;
+        height: 6px;
+        background: var(--color-background-secondary);
+        border-radius: 3px;
+        margin-top: 8px;
+        overflow: hidden;
+    }
+ 
+    .progress-fill {
+        height: 100%;
+        background: #1D9E75;
+        border-radius: 3px;
+        transition: width 0.3s ease;
+    }
+ 
+    .completion-message {
+        text-align: center;
+        padding: 2rem;
+        background: var(--color-background-secondary);
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+    }
+ 
+    .completion-message p {
+        font-size: 16px;
+        color: var(--color-text-primary);
+        margin: 8px 0;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+
+<body>
+    <nav>
+        <a href="layout.html" class="logo">
+        <span class="accent">My</span>Math<span class="accent">Site</span>
+        </a>
+    </nav>
+ 
+    <div class="page_controls">
+        <a href="fraction-intermediate-problem-1.html" class="pageNav_button">← Back</a>
+    </div>
+ 
+    <h2>Exercise 1: Equivalent Fractions</h2>
+    <p class="problem-statement">Match fractions that are equivalent</p>
+ 
+    <div class="exercise-container">
+        <div class="progress">
+            <span id="progress-text">Problem 1 of 3</span>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 33%;"></div>
+            </div>
+        </div>
+ 
+        <div id="exercise-content">
+            <div class="exercise-prompt" id="prompt">Click and drag to draw a line from a fraction to its match</div>
+            
+            <div class="matching-canvas" id="canvas">
+                <svg id="arrow-svg">
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="#1D9E75" />
+                        </marker>
+                        <marker id="arrowhead-temp" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="#888" />
+                        </marker>
+                    </defs>
+                </svg>
+                <div class="fraction-columns">
+                    <div class="fraction-column">
+                        <p class="column-header">Fractions</p>
+                        <div class="fraction-list" id="fractions-list"></div>
+                    </div>
+                    <div class="fraction-column">
+                        <p class="column-header">Equivalents</p>
+                        <div class="fraction-list" id="equivalents-list"></div>
+                    </div>
+                </div>
+            </div>
+ 
+            <div class="feedback" id="feedback"></div>
+        </div>
+ 
+        <div id="completion" class="completion-message hidden">
+            <p style="font-size: 18px; font-weight: 500; margin-bottom: 1rem;">🎉 Great job!</p>
+            <p>You matched all the equivalent fractions correctly!</p>
+        </div>
+ 
+        <div class="controls">
+            <button class="button" id="next-btn" onclick="nextProblem()" class="hidden">Next problem →</button>
+        </div>
+    </div>
+</body>
+ 
+<script>
+    const problems = [
+        {
+            prompt: "Click and drag to draw a line from a fraction to its match",
+            fractions: ["1/2", "2/3", "3/4"],
+            equivalents: ["6/9", "4/8", "9/12"],
+            pairs: [[1, 0], [0, 1], [2, 2]]
+        },
+        {
+            prompt: "Draw arrows to connect equivalent fractions",
+            fractions: ["4/5", "2/5", "1/3"],
+            equivalents: ["3/9", "4/10", "8/10"],
+            pairs: [[0, 2], [1, 1], [2, 0]]
+        },
+        {
+            prompt: "Match the fractions by drawing lines",
+            fractions: ["1/4","2/4", "3/5"],
+            equivalents: ["4/8", "6/10", "2/8"],
+            pairs: [[0, 2], [1, 0], [2, 1]]
+        }
+    ];
+ 
+    let currentProblem = 0;
+    let isDrawing = false;
+    let selectedLeftIdx = null;
+    let matched = new Set();
+    let arrows = [];
+    let tempLine = null;
+ 
+    function initializeProblem() {
+        isDrawing = false;
+        selectedLeftIdx = null;
+        matched.clear();
+        arrows = [];
+        tempLine = null;
+        
+        const problem = problems[currentProblem];
+        document.getElementById("prompt").textContent = problem.prompt;
+        document.getElementById("progress-text").textContent = `Problem ${currentProblem + 1} of ${problems.length}`;
+        document.getElementById("progress-fill").style.width = `${((currentProblem + 1) / problems.length) * 100}%`;
+        document.getElementById("feedback").innerHTML = "";
+        document.getElementById("completion").classList.add("hidden");
+        document.getElementById("exercise-content").classList.remove("hidden");
+        document.getElementById("next-btn").classList.add("hidden");
+        document.getElementById("arrow-svg").innerHTML = `
+            <defs>
+                <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="2" orient="auto">
+                <polygon points="0 0, 6 2, 0 4" fill="#1D9E75" />
+            </marker>
+                <marker id="arrowhead-temp" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                    <polygon points="0 0, 10 3, 0 6" fill="#888" />
+                </marker>
+            </defs>
+        `;
+ 
+        renderFractions();
+    }
+ 
+    function renderFractions() {
+        const problem = problems[currentProblem];
+        const fractionsEl = document.getElementById("fractions-list");
+        const equivalentsEl = document.getElementById("equivalents-list");
+ 
+        fractionsEl.innerHTML = "";
+        equivalentsEl.innerHTML = "";
+ 
+        problem.fractions.forEach((frac, idx) => {
+            const btn = document.createElement("button");
+            btn.className = "fraction-btn";
+            btn.textContent = frac;
+            btn.id = `left-${idx}`;
+            btn.onmousedown = () => startDrawing(idx);
+            fractionsEl.appendChild(btn);
+        });
+ 
+        problem.equivalents.forEach((equiv, idx) => {
+            const btn = document.createElement("button");
+            btn.className = "fraction-btn";
+            btn.textContent = equiv;
+            btn.id = `right-${idx}`;
+            btn.onmouseup = () => endDrawing(idx);
+            equivalentsEl.appendChild(btn);
+        });
+    }
+ 
+    function startDrawing(leftIdx) {
+        if (matched.has(leftIdx)) return;
+        
+        isDrawing = true;
+        selectedLeftIdx = leftIdx;
+        document.getElementById(`left-${leftIdx}`).classList.add("active");
+        document.getElementById("canvas").addEventListener("mousemove", handleMouseMove);
+    }
+ 
+    function handleMouseMove(e) {
+        if (!isDrawing || selectedLeftIdx === null) return;
+ 
+        const canvas = document.getElementById("canvas");
+        const svg = document.getElementById("arrow-svg");
+        const leftBtn = document.getElementById(`left-${selectedLeftIdx}`);
+        const leftRect = leftBtn.getBoundingClientRect();
+        const canvasRect = canvas.getBoundingClientRect();
+ 
+        const x1 = leftRect.right - canvasRect.left - 270;
+        const y1 = leftRect.top - canvasRect.top + leftRect.height / 2;
+        const x2 = e.clientX - canvasRect.left;
+        const y2 = e.clientY - canvasRect.top;
+ 
+        if (tempLine) {
+            tempLine.remove();
+        }
+ 
+        tempLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        tempLine.setAttribute("x1", x1);
+        tempLine.setAttribute("y1", y1);
+        tempLine.setAttribute("x2", x2);
+        tempLine.setAttribute("y2", y2);
+        tempLine.setAttribute("stroke", "#888");
+        tempLine.setAttribute("stroke-width", "2");
+        tempLine.setAttribute("stroke-linecap", "round");
+        tempLine.setAttribute("marker-end", "url(#arrowhead-temp)");
+ 
+        svg.appendChild(tempLine);
+    }
+ 
+    function endDrawing(rightIdx) {
+        if (!isDrawing || selectedLeftIdx === null) return;
+ 
+        isDrawing = false;
+        document.getElementById("canvas").removeEventListener("mousemove", handleMouseMove);
+        
+        if (tempLine) {
+            tempLine.remove();
+            tempLine = null;
+        }
+ 
+        const problem = problems[currentProblem];
+        const feedback = document.getElementById("feedback");
+ 
+        // Check if correct
+        const correctEquiv = problem.pairs.find(pair => pair[0] === selectedLeftIdx)?.[1];
+        
+        if (correctEquiv === rightIdx) {
+            drawArrow(selectedLeftIdx, rightIdx);
+            
+            document.getElementById(`left-${selectedLeftIdx}`).classList.add("matched");
+            document.getElementById(`right-${rightIdx}`).classList.add("matched");
+            matched.add(selectedLeftIdx);
+            
+            feedback.className = "feedback correct";
+            feedback.innerHTML = "✓ Correct!";
+ 
+            if (matched.size === problem.fractions.length) {
+                setTimeout(() => {
+                    if (currentProblem === problems.length - 1) {
+                        showCompletion();
+                    } else {
+                        document.getElementById("next-btn").classList.remove("hidden");
+                        feedback.innerHTML = "✓ All matched! Click next to continue.";
+                    }
+                }, 500);
+            }
+        } else {
+            feedback.className = "feedback incorrect";
+            feedback.innerHTML = "Try again. Look at how much is shaded!";
+        }
+ 
+        document.getElementById(`left-${selectedLeftIdx}`).classList.remove("active");
+        selectedLeftIdx = null;
+    }
+ 
+    function drawArrow(leftIdx, rightIdx) {
+        const svg = document.getElementById("arrow-svg");
+        const canvas = document.getElementById("canvas");
+        const leftBtn = document.getElementById(`left-${leftIdx}`);
+        const rightBtn = document.getElementById(`right-${rightIdx}`);
+ 
+        const leftRect = leftBtn.getBoundingClientRect();
+        const rightRect = rightBtn.getBoundingClientRect();
+        const canvasRect = canvas.getBoundingClientRect();
+ 
+        const x1 = leftRect.left- canvasRect.left + 60;
+        const y1 = leftRect.top - canvasRect.top + leftRect.height / 2;
+        const x2 = rightRect.left - canvasRect.left;
+        const y2 = rightRect.top - canvasRect.top + rightRect.height / 2;
+ 
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", x1);
+        line.setAttribute("y1", y1);
+        line.setAttribute("x2", x2);
+        line.setAttribute("y2", y2);
+        line.setAttribute("stroke", "#1D9E75");
+        line.setAttribute("stroke-width", "2.5");
+        line.setAttribute("stroke-linecap", "round");
+        line.setAttribute("marker-end", "url(#arrowhead)");
+ 
+        svg.appendChild(line);
+        arrows.push(line);
+    }
+ 
+    function showCompletion() {
+        document.getElementById("exercise-content").classList.add("hidden");
+        document.getElementById("completion").classList.remove("hidden");
+    }
+ 
+    function nextProblem() {
+        currentProblem++;
+        initializeProblem();
+    }
+ 
+    function goBack() {
+        window.location.href = "fraction-intermediate-problem-1.html";
+    }
+ 
+    document.addEventListener("mouseup", () => {
+        if (isDrawing) {
+            isDrawing = false;
+            if (selectedLeftIdx !== null) {
+                document.getElementById(`left-${selectedLeftIdx}`).classList.remove("active");
+            }
+            if (tempLine) {
+                tempLine.remove();
+                tempLine = null;
+            }
+            selectedLeftIdx = null;
+        }
+    });
+ 
+    initializeProblem();
+</script>
+ 
+</html>
